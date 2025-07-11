@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Saída de Materiais</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background: #f0f4f8;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+    }
+
+    .card {
+      background: #ffffff;
+      padding: 35px 40px;
+      border-radius: 15px;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 550px;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      text-align: center;
+      color: #2d3436;
+      margin-bottom: 25px;
+    }
+
+    label {
+      margin-top: 15px;
+      font-weight: 500;
+      display: block;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      background-color: #f9fbfc;
+    }
+
+    input:focus, select:focus {
+      border-color: #74b9ff;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 25px;
+      background-color: #0984e3;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #74b9ff;
+    }
+
+    .info {
+      margin-top: 12px;
+      font-size: 0.9rem;
+      color: #636e72;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>Saída de Materiais</h1>
+    <form id="formSaida">
+      <label for="nomeMaterial">Material</label>
+      <select id="nomeMaterial" required></select>
+
+      <label for="quantidadeSaida">Quantidade a Retirar</label>
+      <input type="number" id="quantidadeSaida" min="1" required />
+
+      <label for="destino">Destino</label>
+      <input type="text" id="destino" placeholder="Destino (ex: Sala 01)" required />
+
+      <label for="retiradoPor">Retirado por</label>
+      <input type="text" id="retiradoPor" placeholder="Nome de quem retirou" required />
+
+      <label for="setor">Setor</label>
+      <input type="text" id="setor" placeholder="Ex: Manutenção, Administração" required />
+
+      <label for="data">Data</label>
+      <input type="date" id="data" required />
+
+      <button type="submit">Registrar Saída</button>
+      <div class="info">A quantidade disponível será atualizada automaticamente.</div>
+    </form>
+  </div>
+
+  <script>
+    let materiais = JSON.parse(localStorage.getItem("materiais") || "[]");
+    const selectMaterial = document.getElementById("nomeMaterial");
+
+    function atualizarSelect() {
+      selectMaterial.innerHTML = '';
+      materiais.forEach((mat, index) => {
+        const option = document.createElement("option");
+        option.value = index;
+        option.textContent = `${mat.nome} — Disponível: ${mat.quantidadeDisponivel}`;
+        selectMaterial.appendChild(option);
+      });
+    }
+
+    atualizarSelect();
+
+    document.getElementById("formSaida").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const index = parseInt(selectMaterial.value);
+      const quantidade = parseInt(document.getElementById("quantidadeSaida").value);
+      const destino = document.getElementById("destino").value.trim();
+      const retiradoPor = document.getElementById("retiradoPor").value.trim();
+      const setor = document.getElementById("setor").value.trim();
+      const data = document.getElementById("data").value;
+
+      if (
+        isNaN(quantidade) || quantidade <= 0 ||
+        !destino || !retiradoPor || !setor || !data
+      ) {
+        alert("Preencha todos os campos corretamente.");
+        return;
+      }
+
+      if (quantidade > materiais[index].quantidadeDisponivel) {
+        alert("Quantidade insuficiente no estoque.");
+        return;
+      }
+
+      // Atualiza a quantidade disponível no estoque
+      materiais[index].quantidadeDisponivel -= quantidade;
+
+      // Salva no localStorage o estoque atualizado
+      localStorage.setItem("materiais", JSON.stringify(materiais));
+
+      // Salva o histórico da saída (opcional)
+      const historico = JSON.parse(localStorage.getItem("saidas") || "[]");
+      historico.push({
+        nome: materiais[index].nome,
+        quantidade,
+        destino,
+        retiradoPor,
+        setor,
+        data
+      });
+      localStorage.setItem("saidas", JSON.stringify(historico));
+
+      alert("Saída registrada com sucesso!");
+
+      // Redireciona para a página de listagem atualizada (projeto.html)
+      window.location.href = "projeto.html";
+    });
+  </script>
+
+</body>
+</html>

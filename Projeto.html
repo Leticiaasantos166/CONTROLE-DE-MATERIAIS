@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cadastro de Materiais</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+  <style>
+    * {
+    
+
+
+
+   
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+    body {
+      display: flex;
+      min-height: 100vh;
+      background-color: #f5f7fa;
+    }
+    .sidebar {
+      width: 220px;
+      background-color: #2d3436;
+      color: #fff;
+      padding-top: 50px;
+      position: fixed;
+      height: 100%;
+    }
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 24px;
+    }
+    .sidebar a {
+      display: block;
+      color: #dfe6e9;
+      padding: 15px 30px;
+      text-decoration: none;
+      transition: background-color 0.2s;
+    }
+    .sidebar a:hover {
+      background-color: #636e72;
+    }
+    .main {
+      margin-left: 220px;
+      padding: 40px;
+      width: 100%;
+    }
+    .main h1 {
+      margin-bottom: 30px;
+      color: #2d3436;
+    }
+    input, button {
+      padding: 10px;
+      margin: 5px 10px 5px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .btn {
+      background-color: #0984e3;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background-color: #74b9ff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+      background-color: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      text-align: left;
+    }
+    th {
+      background-color: #dfe6e9;
+    }
+    #filtro {
+      margin: 20px 0;
+      padding: 10px;
+      width: 300px;
+      border: 2px solid #0984e3;
+      border-radius: 8px;
+    }
+    .btn-small {
+      padding: 5px 10px;
+      font-size: 0.9rem;
+      border-radius: 4px;
+      margin-right: 5px;
+    }
+    .btn-edit {
+      background-color: #fdcb6e;
+      color: #2d3436;
+    }
+    .btn-edit:hover {
+      background-color: #ffeaa7;
+    
+    .btn-delete {
+      background-color: #d63031;
+      color: white;
+    }
+    .btn-delete:hover {
+      background-color: #ff7675;
+    }
+  }
+  </style>
+</head>
+<body>
+</html>
+  </style>
+</head>
+<body>
+  <!DOCTYPE html>
+  <html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cadastro de Materiais</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+    <style>
+      /* ... o mesmo CSS que você já tem ... */
+    </style>
+  </head>
+  <body>
+    <div class="sidebar">
+      <h2>Estoque</h2>
+      <a href="index.html">🏠 Home</a>
+      <a href="style/cadastro.html">➕Cadastrar Material</a>
+     <a href="style/saida.html">📤 saida</a>
+      <a href="#">📊 Relatórios</a>
+    </div>
+  
+    <div class="main">
+      <h1>Cadastro de Materiais</h1>
+  
+      <form id="formCadastro">
+        <input type="hidden" id="materialIndex" />
+        <input type="text" id="nomeMaterial" placeholder="Nome do material" required />
+        <input type="number" id="quantidadeInicial" placeholder="Qtd. Inicial" required />
+        <input type="number" id="quantidadeDisponivel" placeholder="Qtd. Disponível" required />
+        <input type   ="number" id="quantidadeMinima" placeholder="Qtd. Mínima" required />
+        <input type="number" id="valor" placeholder="Valor (R$)" step="0.01" required />
+        <input type="text" id="obs" placeholder="Observação" />
+        <button type="submit" class="btn">Cadastrar</button>
+        <button type="button" class="btn" id="btnCancelarEdicao" style="display: none;">Cancelar</button>
+      </form>
+  
+      <input type="text" id="filtro" placeholder="Filtrar materiais pelo nome..." onkeyup="filtrarMateriais()" />
+  
+      <table id="tabelaMateriais">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Qtd. Inicial</t h>
+            <th>Qtd. Disponível</th>
+            <th>Qtd. Mínima</th>
+            <th>Valor</th>
+            <th>Observação</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  
+    <script src="script 1.js"></script> <!-- <-- certifique-se de que o nome está certo -->
+  </body>
+  </html>
+  
