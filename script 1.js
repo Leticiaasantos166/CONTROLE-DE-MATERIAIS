@@ -110,3 +110,4 @@ window.onload = atualizarTabela;
 window.onfocus = atualizarTabela;
 materiais[index].quantidadeDisponivel -= quantidade;
 localStorage.setItem("materiais", JSON.stringify(materiais));
+    
